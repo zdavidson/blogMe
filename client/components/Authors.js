@@ -1,4 +1,5 @@
 import React from "react";
+import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 
 const Authors = (props) => {
@@ -17,4 +18,10 @@ const Authors = (props) => {
   );
 };
 
-export default Authors;
+const mapStateToProps = (state) => {
+  return {
+    authors: state.authors,
+  };
+};
+
+export default connect(mapStateToProps)(Authors);

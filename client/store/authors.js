@@ -1,19 +1,19 @@
 import axios from "axios";
 
-const SET_STORIES = "SET_STORIES";
+const SET_AUTHORS = "SET_AUTHORS";
 
-export const setStories = (stories) => {
+export const setAuthors = (authors) => {
   return {
-    type: SET_STORIES,
-    stories,
+    type: SET_AUTHORS,
+    authors,
   };
 };
 
-export const fetchStories = () => {
+export const fetchAuthors = () => {
   return async (dispatch) => {
     try {
-      const { data } = await axios.get("/api/stories");
-      dispatch(setStories(data));
+      const { data } = await axios.get("/api/authors");
+      dispatch(setAuthors(data));
     } catch (err) {
       console.log(err);
     }
@@ -24,8 +24,8 @@ const initialState = [];
 
 export default (state = initialState, action) => {
   switch (action.type) {
-    case SET_STORIES:
-      return action.stories;
+    case SET_AUTHORS:
+      return action.authors;
     default:
       return state;
   }
