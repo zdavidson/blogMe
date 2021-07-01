@@ -1,8 +1,8 @@
 import React from "react";
-import { connect } from "react-redux";
+import { useSelector } from "react-redux";
 
-const AuthorDetails = (props) => {
-  const author = props.author;
+const AuthorDetails = () => {
+  const author = useSelector((state) => state.author);
 
   return (
     <div id="single-author-detail" className="row">
@@ -15,10 +15,4 @@ const AuthorDetails = (props) => {
   );
 };
 
-const mapStateToProps = (state) => {
-  return {
-    author: state.author,
-  };
-};
-
-export default connect(mapStateToProps)(AuthorDetails);
+export default AuthorDetails;

@@ -1,9 +1,9 @@
 import React from "react";
-import { connect } from "react-redux";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 const StoriesList = (props) => {
-  const stories = props.stories;
+  const stories = useSelector((state) => state.stories);
 
   return (
     <div id="stories" className="column">
@@ -22,10 +22,4 @@ const StoriesList = (props) => {
   );
 };
 
-const mapStateToProps = (state) => {
-  return {
-    stories: state.stories,
-  };
-};
-
-export default connect(mapStateToProps)(StoriesList);
+export default StoriesList;

@@ -1,37 +1,31 @@
-import React, { useState, useEffect } from "react";
-import { connect } from "react-redux";
+import React, { useEffect } from "react";
+import { useDispatch } from "react-redux";
 import { fetchAuthor } from "../store/singleAuthor";
 import StoriesList from "./StoriesList";
 import Comments from "./Comments";
 import AuthorDetails from "./AuthorDetails";
 
-class SingleAuthor extends React.Component {
-  componentDidMount() {
-    this.props.loadAuthor(this.props.match.params.authorId);
-  }
+const SingleAuthor = (props) => {
+  const dispatch = useDispatch();
+  const authorId = props.match.params.authorId;
+  const stories = props.stories;
 
-  render() {
-    const stories = this.props.stories;
-    const authorId = this.props.match.params.authorId;
-    return (
-      <div id="single-author" className="column">
-        <AuthorDetails />
-        <hr />
-        <div>
-          <h4>STORIES</h4>
-          <StoriesList stories={stories} />
-          <h4>COMMENTS</h4>
-          <Comments authorId={authorId} />
-        </div>
+  useEffect(() => {
+    dispatch(fetchAuthor(authorId));
+  });
+
+  return (
+    <div id="single-author" className="column">
+      <AuthorDetails />
+      <hr />
+      <div>
+        <h4>STORIES</h4>
+        <StoriesList stories={stories} />
+        <h4>COMMENTS</h4>
+        <Comments authorId={authorId} />
       </div>
-    );
-  }
-}
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    loadAuthor: (authorId) => dispatch(fetchAuthor(authorId)),
-  };
+    </div>
+  );
 };
 
-export default connect(null, mapDispatchToProps)(SingleAuthor);
+export default SingleAuthor;

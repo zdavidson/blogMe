@@ -1,46 +1,39 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Navbar from "./Navbar";
 import StoriesList from "./StoriesList";
 import SingleStory from "./SingleStory";
 import Authors from "./Authors";
 import SingleAuthor from "./SingleAuthor";
-import { connect } from "react-redux";
+import { useDispatch } from "react-redux";
 import { fetchStories } from "../store/stories";
 import { fetchAuthors } from "../store/authors";
 import { HashRouter as Router, Route } from "react-router-dom";
 
-class Main extends React.Component {
-  componentDidMount() {
-    this.props.loadStories();
-    this.props.loadAuthors();
-  }
+const Main = () => {
+  const dispatch = useDispatch();
 
-  render() {
-    return (
-      <Router>
-        <div id="main">
-          <div className="column container">
-            <div id="header">
-              <h1>Readium</h1>
-            </div>
-            <Navbar />
+  useEffect(() => {
+    dispatch(fetchStories());
+    dispatch(fetchAuthors());
+  });
+
+  return (
+    <Router>
+      <div id="main">
+        <div className="column container">
+          <div id="header">
+            <h1>Readium</h1>
           </div>
-          <Route exact path="/" component={StoriesList} />
-          <Route exact path="/stories" component={StoriesList} />
-          <Route exact path="/stories/:storyId" component={SingleStory} />
-          <Route exact path="/authors" component={Authors} />
-          <Route exact path="/authors/:authorId" component={SingleAuthor} />
+          <Navbar />
         </div>
-      </Router>
-    );
-  }
-}
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    loadStories: () => dispatch(fetchStories()),
-    loadAuthors: () => dispatch(fetchAuthors()),
-  };
+        <Route exact path="/" component={StoriesList} />
+        <Route exact path="/stories" component={StoriesList} />
+        <Route exact path="/stories/:storyId" component={SingleStory} />
+        <Route exact path="/authors" component={Authors} />
+        <Route exact path="/authors/:authorId" component={SingleAuthor} />
+      </div>
+    </Router>
+  );
 };
 
-export default connect(null, mapDispatchToProps)(Main);
+export default Main;
