@@ -6,12 +6,14 @@ import stories from "./stories";
 import authors from "./authors";
 import author from "./singleAuthor";
 import story from "./singleStory";
+import comments from "./comments";
 
 const reducer = combineReducers({
   stories,
   authors,
   author,
   story,
+  comments,
 });
 
 const middleware = composeWithDevTools(

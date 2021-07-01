@@ -1,34 +1,26 @@
 import React, { useState, useEffect } from "react";
+import { fetchStoryComments } from "../store/comments";
+import { useSelector, useDispatch } from "react-redux";
 import Comment from "./Comment";
 
 const Comments = (props) => {
-  const [comments, setComments] = useState({});
-  const [isLoaded, setIsLoaded] = useState(false);
-  const authorId = props.authorId;
+  const dispatch = useDispatch();
+  const storyId = props.storyId;
 
   useEffect(() => {
-    async function fetchComments() {
-      await fetch(`/api/authors/${authorId}/comments`)
-        .then((res) => res.json())
-        .then((result) => {
-          setComments(result);
-          setIsLoaded(true);
-        });
-    }
-    fetchComments();
+    dispatch(fetchStoryComments(storyId));
   }, []);
 
-  if (!isLoaded) {
-    return <div>Loading...</div>;
-  } else if (isLoaded) {
-    return (
-      <div id="comments">
-        {comments.map((comment) => {
-          return <Comment key={comment.id} comment={comment} />;
-        })}
-      </div>
-    );
-  }
+  const comments = useSelector((state) => state.comments);
+
+  return (
+    <div id="comments">
+      <div></div>
+      {comments.map((comment) => {
+        return <Comment key={comment.id} comment={comment} />;
+      })}
+    </div>
+  );
 };
 
 export default Comments;
