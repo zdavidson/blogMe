@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 
 const StoriesList = (props) => {
   const stories = props.stories;
+
   return (
     <div id="stories" className="column">
       {stories.map((story) => (

@@ -3,6 +3,7 @@ import Navbar from "./Navbar";
 import StoriesList from "./StoriesList";
 import SingleStory from "./SingleStory";
 import Authors from "./Authors";
+import SingleAuthor from "./SingleAuthor";
 import { connect } from "react-redux";
 import { fetchStories } from "../store/stories";
 import { fetchAuthors } from "../store/authors";
@@ -28,6 +29,7 @@ class Main extends React.Component {
           <Route exact path="/stories" component={StoriesList} />
           <Route exact path="/stories/:storyId" component={SingleStory} />
           <Route exact path="/authors" component={Authors} />
+          <Route exact path="/authors/:authorId" component={SingleAuthor} />
         </div>
       </Router>
     );

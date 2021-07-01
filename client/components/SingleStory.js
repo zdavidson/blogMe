@@ -1,5 +1,3 @@
-import { Component } from "react";
-import { connect } from "react-redux";
 import React, { useState, useEffect } from "react";
 import Comments from "./Comments";
 
