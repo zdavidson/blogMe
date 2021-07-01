@@ -1,13 +1,13 @@
 import React, { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { fetchStories } from "../store/stories";
+import { fetchAuthors } from "../store/authors";
+import { HashRouter as Router, Route } from "react-router-dom";
 import Navbar from "./Navbar";
 import StoriesList from "./StoriesList";
 import SingleStory from "./SingleStory";
 import Authors from "./Authors";
 import SingleAuthor from "./SingleAuthor";
-import { useDispatch } from "react-redux";
-import { fetchStories } from "../store/stories";
-import { fetchAuthors } from "../store/authors";
-import { HashRouter as Router, Route } from "react-router-dom";
 
 const Main = () => {
   const dispatch = useDispatch();
@@ -15,7 +15,7 @@ const Main = () => {
   useEffect(() => {
     dispatch(fetchStories());
     dispatch(fetchAuthors());
-  });
+  }, []);
 
   return (
     <Router>

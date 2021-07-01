@@ -1,18 +1,32 @@
-import { bindActionCreators } from "redux";
+import axios from "axios";
 
-const SELECT_SINGLESTORY = 'SELECT_SINGLESTORY';
+const SET_STORY = "SET_STORY";
 
-const initialState = '';
-
-const selectSingleStories = (storyId) => {
+export const setStory = (story) => {
   return {
-    type: SELECT_SINGLESTORY,
-    storyId
-  }
-}
+    type: SET_STORY,
+    story,
+  };
+};
 
-const singleReducer = (state = initialState, action) => {
-  if (action.type === SELECT_SINGLESTORY){
-    return [...state, action.storyId]
+export const fetchStory = (storyId) => {
+  return async (dispatch) => {
+    try {
+      const { data } = await axios.get(`/api/stories/${storyId}`);
+      dispatch(setStory(data));
+    } catch (err) {
+      console.log(err);
+    }
+  };
+};
+
+const initialState = [];
+
+export default (state = initialState, action) => {
+  switch (action.type) {
+    case SET_STORY:
+      return action.story;
+    default:
+      return state;
   }
-}
+};

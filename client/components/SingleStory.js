@@ -1,40 +1,25 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { fetchStory } from "../store/singleStory";
 import Comments from "./Comments";
 
 const SingleStory = (props) => {
-  const [story, setStory] = useState({});
-  const [isLoaded, setIsLoaded] = useState(false);
-
+  const dispatch = useDispatch();
   const storyId = props.match.params.storyId;
 
   useEffect(() => {
-    async function fetchStory() {
-      await fetch(`/api/stories/${storyId}`)
-        .then((res) => res.json())
-        .then((result) => {
-          setStory(result);
-          setIsLoaded(true);
-        });
-    }
-    fetchStory();
+    dispatch(fetchStory(storyId));
   }, []);
 
-  if (!isLoaded) {
-    return <div>Loading...</div>;
-  } else {
-    const storyComments = story.comments;
-    const split = story.content.split("\n");
-    return (
-      <div id="single-story" className="column">
-        <h1>{story.title}</h1>
-        {split.map((line) => {
-          return <p key={line.length - 1}>{line}</p>;
-        })}
-        <h3>Responses:</h3>
-        <Comments storyComments={storyComments} />
-      </div>
-    );
-  }
+  const story = useSelector((state) => state.story);
+  return (
+    <div id="single-story" className="column">
+      <h1>{story.title}</h1>
+      <p>{story.content}</p>
+      <h3>Responses:</h3>
+      <Comments storyId={storyId} />
+    </div>
+  );
 };
 
 export default SingleStory;
