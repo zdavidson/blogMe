@@ -33,7 +33,9 @@ app.use((err, req, res, next) => {
 const init = async () => {
   await db.sync();
 
-  app.listen(PORT, () => console.log(`Listening on port: ${PORT}`));
+  app.listen(process.env.NODE_ENV || PORT, () =>
+    console.log(`Listening on port: ${PORT}`)
+  );
 };
 
 init();
